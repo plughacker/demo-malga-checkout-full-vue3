@@ -1,0 +1,196 @@
+<template>
+  <main>
+    <PlugCheckoutFull
+      :sandbox="true"
+      :publicKey="publicKey"
+      :clientId="clientId"
+      :merchantId="merchantId"
+      :paymentMethods="{
+        pix: {
+          expiresIn: 3600,
+        },
+        credit: {
+          installments: {
+            quantity: 1,
+            show: true,
+          },
+          checkedSaveCard: false,
+          showCreditCard: true,
+        },
+        boleto: {
+          expiresDate: '2022-12-31',
+          instructions: 'Instruções para pagamento do boleto',
+          interest: {
+            days: 1,
+            amount: 100,
+          },
+          fine: {
+            days: 2,
+            amount: 200,
+          },
+        },
+      }"
+      :transactionConfig="{
+        statementDescriptor: '#1 Demonstration Plug Checkout',
+        amount: 100,
+        description: '',
+        orderId: '',
+        customerId: customerId,
+        currency: 'BRL',
+        capture: false,
+      }"
+      :dialogConfig="{
+        show: true,
+        actionButtonLabel: 'Continuar',
+        errorActionButtonLabel: 'Tentar novamente',
+        successActionButtonLabel: 'Continuar',
+        successRedirectUrl: 'https://www.plugpagamentos.com/',
+        pixFilledProgressBarColor: '#344383',
+        pixEmptyProgressBarColor: '#D8DFF0',
+      }"
+      :pageConfig="{
+        brandUrl: 'https://exampleurl/images/logo.png',
+        footerDescription:
+          'Todos os direitos reservados © 2022 Plug Pagamentos.',
+        backRoute: 'https://www.plugpagamentos.com/',
+        delivery: 0,
+        products: [
+          {
+            name: 'Produto 1',
+            quantity: 2,
+            amount: 50,
+            description: 'Descrição do produto 1',
+            sku: '123',
+            risk: 'Low',
+          },
+          {
+            name: 'Produto 2',
+            quantity: 2,
+            amount: 40,
+            description: 'Descrição do produto 2',
+            sku: '124',
+            risk: 'Low',
+          },
+        ],
+      }"
+      @paymentSuccess="handlePaymentSuccess"
+      @paymentFailed="handlePaymentFailed"
+    />
+  </main>
+</template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+import PlugCheckoutFull from "@plug-checkout-full/core";
+
+import {
+  PlugCheckoutFullTransactionSuccessEvent,
+  PlugCheckoutFullTransactionErrorEvent,
+} from "./App.types";
+
+export default defineComponent({
+  name: "App",
+  components: {
+    PlugCheckoutFull,
+  },
+  data() {
+    return {
+      publicKey: "<YOUR_PUBLIC_KEY>",
+      clientId: "<YOUR_CLIENT_ID>",
+      merchantId: "<YOUR_MERCHANT_ID>",
+      customerId: "<CUSTOMER_ID>",
+    };
+  },
+  methods: {
+    handlePaymentSuccess(data: PlugCheckoutFullTransactionSuccessEvent) {
+      console.log(data);
+    },
+    handlePaymentFailed(error: PlugCheckoutFullTransactionErrorEvent) {
+      console.log(error);
+    },
+  },
+});
+</script>
+
+<style>
+:root {
+  /* Colors */
+  --plug-checkout-color-brand-accent-light: #4ebff1;
+  --plug-checkout-color-brand-accent-normal: #0055a2;
+  --plug-checkout-color-brand-clean: #d8dff0;
+  --plug-checkout-color-brand-light: #0091ea;
+  --plug-checkout-color-brand-normal: #5c7ec0;
+  --plug-checkout-color-brand-middle: #344383;
+  --plug-checkout-color-brand-dark: #141b4d;
+  --plug-checkout-color-grey-light: #aaafc5;
+  --plug-checkout-color-grey-normal: #8b90a7;
+  --plug-checkout-color-grey-middle: #5e6277;
+  --plug-checkout-color-grey-dark: #3f4252;
+  --plug-checkout-color-grey-darkness: #1d1f2a;
+  --plug-checkout-color-accent-light: #ffffff;
+  --plug-checkout-color-accent-normal: #eef2f6;
+  --plug-checkout-color-accent-middle: #aebfd0;
+  --plug-checkout-color-warning-light: #fff8e1;
+  --plug-checkout-color-warning-normal: #fac30e;
+  --plug-checkout-color-warning-middle: #ffa200;
+  --plug-checkout-color-modal-success: #32c000;
+  --plug-checkout-color-modal-error: #ff1744;
+  --plug-checkout-color-modal-action-button-error: #344383;
+  --plug-checkout-color-modal-action-button-error-hover: #5c7ec0;
+  --plug-checkout-color-modal-action-button-success: #344383;
+  --plug-checkout-color-modal-action-button-success-hover: #5c7ec0;
+  --plug-checkout-color-modal-action-button-success-font-color: #ffffff;
+  --plug-checkout-color-modal-action-button-error-font-color: #ffffff;
+
+  /* Typography */
+  --plug-checkout-typography-family: "Roboto", sans-serif;
+
+  /* Spacings */
+  --plug-checkout-spacing-xxs: 4px;
+  --plug-checkout-spacing-xs: 8px;
+  --plug-checkout-spacing-sm: 16px;
+  --plug-checkout-spacing-default: 24px;
+  --plug-checkout-spacing-md: 32px;
+  --plug-checkout-spacing-lg: 48px;
+  --plug-checkout-spacing-xlg: 64px;
+  --plug-checkout-spacing-xxlg: 96px;
+
+  /* Sizes */
+  --plug-checkout-size-min-width: 250px;
+
+  /* Border Radius */
+  --plug-checkout-border-radius-default: 4px;
+  --plug-checkout-border-radius-md: 6px;
+  --plug-checkout-border-radius-lg: 20px;
+
+  /* Transitions Time */
+  --plug-checkout-transition-slow: 0.3s;
+  --plug-checkout-transition-default: 0.5s;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #eef2f6;
+  margin: 0;
+  padding: 8px;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+@media only screen and (min-width: 600px) {
+  main {
+    padding: 50px;
+    width: 500px;
+  }
+}
+</style>
