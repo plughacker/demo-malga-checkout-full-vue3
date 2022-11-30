@@ -73,8 +73,8 @@
           },
         ],
       }"
-      @paymentSuccess="handlePaymentSuccess"
-      @paymentFailed="handlePaymentFailed"
+      @transactionSuccess="handlePaymentSuccess"
+      @transactionFailed="handlePaymentFailed"
     />
   </main>
 </template>
