@@ -34,7 +34,6 @@
       amount: 100,
       description: '',
       orderId: '',
-      customerId: customerId,
       currency: 'BRL',
       capture: false,
     }"
@@ -92,7 +91,6 @@ export default defineComponent({
       publicKey: "<YOUR_PUBLIC_KEY>",
       clientId: "<YOUR_CLIENT_ID>",
       merchantId: "<YOUR_MERCHANT_ID>",
-      customerId: "<CUSTOMER_ID>",
     };
   },
   methods: {

@@ -3,7 +3,7 @@ import { createApp } from "vue";
 import {
   applyPolyfills,
   defineCustomElements,
-} from "@malga-checkout/core/loader";
+} from "@malga-checkout-full/core/loader";
 
 import App from "./App.vue";
 
